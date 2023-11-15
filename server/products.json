@@ -1,0 +1,75 @@
+[
+    {
+        "id":1,
+        "category": "Tech",
+        "productList":[
+            {
+                "id":1,
+                "productName": "Logitec G502 X",
+                "currentProductPrice": 109.33,
+                "lowestProductPrice": 100.00,
+                "lowestProductPriceDate": "2012-04-23",
+                "trackedSinceDate": "2012-03-20",
+                "category": "Tech"
+        
+            },
+            {
+                "id":4,
+                "productName": "Asus OLED Monitor",
+                "currentProductPrice": 109.33,
+                "lowestProductPrice": 100.00,
+                "lowestProductPriceDate": "2012-04-23",
+                "trackedSinceDate": "2012-03-20",
+                "category": "Tech"
+        
+            }
+        ]
+    },
+    {
+        "id":2,
+        "category": "Fashion",
+        "productList": [
+            {
+                "id":2,
+                "productName": "Ski Goggles",
+                "currentProductPrice": 109.33,
+                "lowestProductPrice": 100.00,
+                "lowestProductPriceDate": "2012-04-23",
+                "trackedSinceDate": "2012-03-20",
+                "category": "Fashion"
+        
+            }
+        ]
+    },
+    {
+        "id":3,
+        "category": "Grocery",
+        "productList": [
+            {
+                "id":3,
+                "productName": "Coffee",
+                "currentProductPrice": 109.33,
+                "lowestProductPrice": 100.00,
+                "lowestProductPriceDate": "2012-04-23",
+                "trackedSinceDate": "2012-03-20",
+                "category": "Grocery"
+        
+            }
+        ]
+    },
+    {
+        "id":4,
+        "category": "Cosmetics",
+        "productList": [
+            {
+                "id":5,
+                "productName": "Avene Cream",
+                "currentProductPrice": 109.33,
+                "lowestProductPrice": 100.00,
+                "lowestProductPriceDate": "2012-04-23",
+                "trackedSinceDate": "2012-03-20",
+                "category": "Cosmetics"
+            }
+        ]
+    }
+]
