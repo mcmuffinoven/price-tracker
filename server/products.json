@@ -1,74 +1,85 @@
 [
     {
-        "id":1,
         "category": "Tech",
         "productList":[
             {
                 "id":1,
                 "productName": "Logitec G502 X",
+                "startingProductPrice": 110.00,
                 "currentProductPrice": 109.33,
                 "lowestProductPrice": 100.00,
                 "lowestProductPriceDate": "2012-04-23",
                 "trackedSinceDate": "2012-03-20",
-                "category": "Tech"
+                "category": "Tech",
+                "productLink":"https://www.bestbuy.ca/en-ca/product/insignia-32-1080p-fhd-led-smart-tv-ns-32f202ca23-fire-tv-edition-2022-only-at-best-buy/16016210",
+                "saleBool": true
         
             },
             {
                 "id":4,
                 "productName": "Asus OLED Monitor",
-                "currentProductPrice": 109.33,
-                "lowestProductPrice": 100.00,
+                "startingProductPrice": 2010.00,
+                "currentProductPrice": 2003.21,
+                "lowestProductPrice": 1999.00,
                 "lowestProductPriceDate": "2012-04-23",
-                "trackedSinceDate": "2012-03-20",
-                "category": "Tech"
+                "trackedSinceDate": "2012-04-20",
+                "category": "Tech",
+                "productLink":"https://www.bestbuy.ca/en-ca/product/insignia-32-1080p-fhd-led-smart-tv-ns-32f202ca23-fire-tv-edition-2022-only-at-best-buy/16016210",
+                "saleBool": true
         
             }
         ]
     },
     {
-        "id":2,
         "category": "Fashion",
         "productList": [
             {
                 "id":2,
                 "productName": "Ski Goggles",
-                "currentProductPrice": 109.33,
-                "lowestProductPrice": 100.00,
+                "startingProductPrice": 200.00,
+                "currentProductPrice": 200.00,
+                "lowestProductPrice": 192.00,
                 "lowestProductPriceDate": "2012-04-23",
-                "trackedSinceDate": "2012-03-20",
-                "category": "Fashion"
+                "trackedSinceDate": "2012-03-22",
+                "category": "Fashion",
+                "productLink":"https://www.bestbuy.ca/en-ca/product/insignia-32-1080p-fhd-led-smart-tv-ns-32f202ca23-fire-tv-edition-2022-only-at-best-buy/16016210",
+                "saleBool": false
         
             }
         ]
     },
     {
-        "id":3,
         "category": "Grocery",
         "productList": [
             {
                 "id":3,
                 "productName": "Coffee",
-                "currentProductPrice": 109.33,
-                "lowestProductPrice": 100.00,
+                "startingProductPrice": 67.00,
+                "currentProductPrice": 65.3,
+                "lowestProductPrice": 33,
                 "lowestProductPriceDate": "2012-04-23",
-                "trackedSinceDate": "2012-03-20",
-                "category": "Grocery"
+                "trackedSinceDate": "2012-01-20",
+                "category": "Grocery",
+                "productLink":"https://www.bestbuy.ca/en-ca/product/insignia-32-1080p-fhd-led-smart-tv-ns-32f202ca23-fire-tv-edition-2022-only-at-best-buy/16016210",
+                "saleBool": true
         
             }
         ]
     },
     {
-        "id":4,
         "category": "Cosmetics",
         "productList": [
             {
                 "id":5,
                 "productName": "Avene Cream",
-                "currentProductPrice": 109.33,
-                "lowestProductPrice": 100.00,
+                "startingProductPrice": 22.23,
+                "currentProductPrice": 22.23,
+                "lowestProductPrice": 11,
                 "lowestProductPriceDate": "2012-04-23",
                 "trackedSinceDate": "2012-03-20",
-                "category": "Cosmetics"
+                "category": "Cosmetics",
+                "productLink":"https://www.bestbuy.ca/en-ca/product/insignia-32-1080p-fhd-led-smart-tv-ns-32f202ca23-fire-tv-edition-2022-only-at-best-buy/16016210",
+                "saleBool": false
             }
         ]
     }
