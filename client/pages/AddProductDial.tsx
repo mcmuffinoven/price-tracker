@@ -9,7 +9,7 @@ import PrintIcon from '@mui/icons-material/Print';
 import ShareIcon from '@mui/icons-material/Share';
 
 import Popup from './Popup';
-import FormattedInputs from './NewProductForm';
+import ProductForm from './NewProductForm';
 
 const actions = [
   { icon: <FileCopyIcon />, name: 'Copy', operation: "copy"},
@@ -54,7 +54,9 @@ export default function BasicSpeedDial() {
         title = "Track new product"
         openPopup = {openPopup}
         setOpenPopup = {setOpenPopup}>
-          <FormattedInputs></FormattedInputs>
+          <ProductForm 
+            openPopup = {openPopup}
+            setOpenPopup = {setOpenPopup}></ProductForm>
       </Popup>
     </Box>
   );

@@ -1,20 +1,10 @@
 import React, {useState} from 'react';
-import { IMaskInput } from 'react-imask';
-import { NumericFormat, NumericFormatProps } from 'react-number-format';
 import Stack from '@mui/material/Stack';
-import Input from '@mui/material/Input';
-import InputLabel from '@mui/material/InputLabel';
 import TextField from '@mui/material/TextField';
-import FormControl from '@mui/material/FormControl';
 import { Button } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { red } from '@mui/material/colors';
-
-interface CustomProps {
-  onChange: (event: { target: { name: string; value: string } }) => void;
-  name: string;
-}
 
 const categories = [
   {
@@ -35,98 +25,44 @@ const categories = [
   },
 ];
 
-const TextMaskCustom = React.forwardRef<HTMLInputElement, CustomProps>(
-  function TextMaskCustom(props, ref) {
-    const { onChange, ...other } = props;
-    return (
-      <IMaskInput
-        {...other}
-        mask="(#00) 000-0000"
-        definitions={{
-          '#': /[1-9]/,
-        }}
-        inputRef={ref}
-        onAccept={(value: any) => onChange({ target: { name: props.name, value } })}
-        overwrite
-      />
-    );
-  },
-);
+export default function ProductForm(props:any) {
 
-const NumericFormatCustom = React.forwardRef<NumericFormatProps, CustomProps>(
-  function NumericFormatCustom(props, ref) {
-    const { onChange, ...other } = props;
-
-    return (
-      <NumericFormat
-        {...other}
-        getInputRef={ref}
-        onValueChange={(values) => {
-          onChange({
-            target: {
-              name: props.name,
-              value: values.value,
-            },
-          });
-        }}
-        thousandSeparator
-        valueIsNumericString
-        prefix="$"
-      />
-    );
-  },
-);
-
-export default function FormattedInputs() {
-  const [values, setValues] = React.useState({
-    textmask: '(100) 000-0000',
-    numberformat: '1320',
-  });
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValues({
-      ...values,
-      [event.target.name]: event.target.value,
-    });
-  };
-
-    const [firstName, setFirstName] = useState('')
-    const [lastName, setLastName] = useState('')
-    const [email, setEmail] = useState('')
-    const [dateOfBirth, setDateOfBirth] = useState('')
+    const {openPopup, setOpenPopup} = props;
+    const [productName, setProductName] = useState('')
+    const [productLink, setProductLink] = useState('')
+    const [productDate, setProductDate] = useState('')
+    const [productCategory, setProductCategory] = useState('')
     
-    function handleSubmit(event:any) {
-        event.preventDefault();
-        console.log(firstName, lastName, email, dateOfBirth) 
-    }
+    const handleSubmit=(event:any) =>{
+      event.preventDefault();
+      console.log('Product:',productName, 'Link:', productLink, 'Date:', productDate, 'Category:', productCategory); 
+      // ..code to submit form to backend here...
+      const postData = JSON.stringify({
+        "productName": productName,
+        "trackedSinceDate": productDate,
+        "category": productCategory,
+      })
+      console.log(postData)
+      fetch('http://localhost:8080/api/addProduct', {
+        method: 'POST',
+        body: postData,
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data);
+            // Handle data
+        })
+        .catch((err) => {
+            console.log(err.message);
+        });
+  }
     
   return (
     <>
-      <form>
-        {/* <Stack direction="row" spacing={2}>
-          <FormControl variant="standard">
-            <InputLabel htmlFor="formatted-text-mask-input">react-imask</InputLabel>
-            <Input
-              value={values.textmask}
-              onChange={handleChange}
-              name="textmask"
-              id="formatted-text-mask-input"
-              inputComponent={TextMaskCustom as any}
-            />
-          </FormControl>
-
-          <TextField
-            label="react-number-format"
-            value={values.numberformat}
-            onChange={handleChange}
-            name="numberformat"
-            id="formatted-numberformat-input"
-            InputProps={{
-              inputComponent: NumericFormatCustom as any,
-            }}
-            variant="standard"
-          />
-        </Stack> */}
+      <form onSubmit={handleSubmit}>
         <Stack 
               direction="column"
               justifyContent="space-evenly"
@@ -139,8 +75,8 @@ export default function FormattedInputs() {
                 color='secondary'
                 label="Product Name"
                 helperText="Name of product"
-                onChange={e => setFirstName(e.target.value)}
-                value={firstName}
+                onChange={e => setProductName(e.target.value)}
+                value={productName}
                 fullWidth
                 required
                 sx={{mb: 4}}
@@ -151,8 +87,8 @@ export default function FormattedInputs() {
               color='secondary'
               label="Product Link"
               helperText="Link to product"
-              onChange={e => setEmail(e.target.value)}
-              value={email}
+              onChange={e => setProductLink(e.target.value)}
+              value={productLink}
               fullWidth
               required
               sx={{mb: 4}}
@@ -162,8 +98,8 @@ export default function FormattedInputs() {
               variant='outlined'
               color='secondary'
               helperText="Optional: Set deadline date"
-              onChange={e => setDateOfBirth(e.target.value)}
-              value={dateOfBirth}
+              onChange={e => setProductDate(e.target.value)}
+              value={productDate}
               sx={{mb: 4}}
           ><DatePicker></DatePicker></TextField>
           <TextField
@@ -171,6 +107,8 @@ export default function FormattedInputs() {
             select
             label="Select"
             helperText="Select a category"
+            onChange={e => setProductCategory(e.target.value)}
+            value={productCategory}
             sx={{mb: 4}}
           >
             {categories.map((option) => (
@@ -184,8 +122,8 @@ export default function FormattedInputs() {
               justifyContent="flex-end"
               alignItems="stretch"
               spacing={3}>
-            <Button variant="outlined" color="primary" type="submit" sx={{mb: 4}}>Add</Button>
-            <Button variant="outlined" sx={{borderColor: red[500], color:red[500], mb: 4}} type="submit">Cancel</Button>
+            <Button variant="outlined" color="primary" type="submit" sx={{mb: 4}} onClick={()=>{setOpenPopup(false)}}>Add</Button>
+            <Button variant="outlined" sx={{borderColor: red[500], color:red[500], mb: 4}} onClick={()=>{setOpenPopup(false)}}>Cancel</Button>
           </Stack>
         </Stack>
     </form>

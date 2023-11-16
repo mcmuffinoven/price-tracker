@@ -27,6 +27,11 @@ for (const [key, value] of Object.entries(cats[0].productList[0])) {
       return <Chip variant="outlined" sx={{justifyContent:"center"}} size="small" {...getChipProps(params)} />;
     }
   }
+  if(key == "productLink"){
+    parameters['renderCell'] = (params:any) => {
+      return <a href={params.value} target="_blank">{params.value}</a>
+    }
+  }
   colDef.push(parameters)
 }
 

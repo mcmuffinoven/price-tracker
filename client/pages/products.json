@@ -11,6 +11,7 @@
                 "lowestProductPriceDate": "2012-04-23",
                 "trackedSinceDate": "2012-03-20",
                 "category": "Tech",
+                "productLink":"https://www.bestbuy.ca/en-ca/product/insignia-32-1080p-fhd-led-smart-tv-ns-32f202ca23-fire-tv-edition-2022-only-at-best-buy/16016210",
                 "saleBool": true
         
             },
@@ -23,6 +24,7 @@
                 "lowestProductPriceDate": "2012-04-23",
                 "trackedSinceDate": "2012-04-20",
                 "category": "Tech",
+                "productLink":"https://www.bestbuy.ca/en-ca/product/insignia-32-1080p-fhd-led-smart-tv-ns-32f202ca23-fire-tv-edition-2022-only-at-best-buy/16016210",
                 "saleBool": true
         
             }
@@ -40,6 +42,7 @@
                 "lowestProductPriceDate": "2012-04-23",
                 "trackedSinceDate": "2012-03-22",
                 "category": "Fashion",
+                "productLink":"https://www.bestbuy.ca/en-ca/product/insignia-32-1080p-fhd-led-smart-tv-ns-32f202ca23-fire-tv-edition-2022-only-at-best-buy/16016210",
                 "saleBool": false
         
             }
@@ -57,6 +60,7 @@
                 "lowestProductPriceDate": "2012-04-23",
                 "trackedSinceDate": "2012-01-20",
                 "category": "Grocery",
+                "productLink":"https://www.bestbuy.ca/en-ca/product/insignia-32-1080p-fhd-led-smart-tv-ns-32f202ca23-fire-tv-edition-2022-only-at-best-buy/16016210",
                 "saleBool": true
         
             }
@@ -74,6 +78,7 @@
                 "lowestProductPriceDate": "2012-04-23",
                 "trackedSinceDate": "2012-03-20",
                 "category": "Cosmetics",
+                "productLink":"https://www.bestbuy.ca/en-ca/product/insignia-32-1080p-fhd-led-smart-tv-ns-32f202ca23-fire-tv-edition-2022-only-at-best-buy/16016210",
                 "saleBool": false
             }
         ]
