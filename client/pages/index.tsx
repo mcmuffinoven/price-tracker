@@ -4,10 +4,8 @@ import {Container, Grid, Typography} from "@mui/material"
 import { TourCard, Prod, Category} from './TourCard';
 import PrimarySearchAppBar from './AppBar';
 import cats from "./products.json"
-import DataGridDemo from './Table';
-import SparklineColumn from './SparkTable';
+import DataTable from './Table';
 import BasicSpeedDial from './AddProductDial';
-import Stack from '@mui/material/Stack';
 
 function index() {
 
@@ -23,6 +21,7 @@ function index() {
   //     })
   // }, []);
   // console.log(products)
+
   return (
     <div className = "App">
       <PrimarySearchAppBar></PrimarySearchAppBar>
@@ -45,9 +44,9 @@ function index() {
         {/* <Container sx={{marginY:5}}>
           <SingleLineGridList></SingleLineGridList>
         </Container> */}
-
+        
           <Container sx={{marginY:5}}>
-            <DataGridDemo></DataGridDemo>
+            <DataTable></DataTable>
             {/* <SparklineColumn></SparklineColumn> */}
           <BasicSpeedDial></BasicSpeedDial>
           </Container>

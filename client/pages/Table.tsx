@@ -9,56 +9,14 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import cats from "./products.json"
 
-// Should probably hard code these cols 
-const colDef:GridColDef[] = []
-for (const [key, value] of Object.entries(cats[0].productList[0])) {
-  const parameters:any = {
-    field:key,
-    headerName: key,
-    type: "string",
-    width: 150,
-    editable: false,
-  }
-  if (key == "saleBool"){
-    parameters['renderCell'] = (params:any) => {
-      return <Chip variant="outlined" sx={{justifyContent:"center"}} size="small" {...getChipProps(params)} />;
-    }
-  }
-  if(key == "productLink"){
-    parameters['renderCell'] = (params:any) => {
-      return <a href={params.value} target="_blank">{params.value}</a>
-    }
-  }
-  colDef.push(parameters)
-}
+export default function DataTable() {
 
-function getChipProps(params: GridRenderCellParams): ChipProps {
-  if (params.value === false) {
-    return {
-      icon: <WarningOutlined style={{ fill: red[500], }} />,
-      style: {
-        borderColor: red[500]
-      },
-      label:"No Sale",
-      color:"error"
-    };
-  } else {
-    return {
-      icon: <CheckCircleOutline style={{ fill: green[500] }} />,
-      style: {
-        borderColor: green[500]
-      },
-      label:"Sale",
-      color:"success"
-    };
-  }
-}
-
-export default function DataGridDemo() {
-
+  const [tableData, setTableData] = useState<any>([]);
+  const [loading, setLoading] = useState(false);
   const CategoryType = {
     Tech: "Tech" ,
     Grocery: "Grocery" ,
@@ -68,20 +26,79 @@ export default function DataGridDemo() {
   };
 
   const [categoryType, setCategory] = useState("All");
-
-
-  // Should probably hard code these rows
+  const colDef:GridColDef[] = []
   const arr:any[] = [];
-  cats.map(item=>{ 
-    item.productList.map(row=>{
-      if (row.category == categoryType){
-        arr.push(row)
+  
+  useEffect(() => {
+    setLoading(true)
+    fetch("http://localhost:8080/api/home")
+      .then((response) => response.json())
+      .then((data) => {
+        // Loading message on load
+        setTableData(data)
+        }).finally(()=>{
+          setLoading(false)
+        })
+        }, []);
+
+  if (!loading && tableData.length!=0){
+    // Should probably hard code these cols 
+          
+    for (const [key, value] of Object.entries(tableData[0].productList[0])) {
+      const parameters:any = {
+        field:key,
+        headerName: key,
+        type: "string",
+        width: 150,
+        editable: false,
       }
-      if (categoryType == "All"){
-        arr.push(row)
+      if (key == "saleBool"){
+        parameters['renderCell'] = (params:any) => {
+          return <Chip variant="outlined" sx={{justifyContent:"center"}} size="small" {...getChipProps(params)} />;
+        }
       }
+      if(key == "productLink"){
+        parameters['renderCell'] = (params:any) => {
+          return <a href={params.value} target="_blank">{params.value}</a>
+        }
+      }
+      colDef.push(parameters)
+    }
+
+    function getChipProps(params: GridRenderCellParams): ChipProps {
+      if (params.value === false) {
+        return {
+          icon: <WarningOutlined style={{ fill: red[500], }} />,
+          style: {
+            borderColor: red[500]
+          },
+          label:"No Sale",
+          color:"error"
+        };
+      } else {
+        return {
+          icon: <CheckCircleOutline style={{ fill: green[500] }} />,
+          style: {
+            borderColor: green[500]
+          },
+          label:"Sale",
+          color:"success"
+        };
+      }
+    }
+    
+    // Should probably hard code these rows
+    tableData.map((item:any)=>{ 
+      item.productList.map((row:any)=>{
+        if (row.category == categoryType){
+          arr.push(row)
+        }
+        if (categoryType == "All"){
+          arr.push(row)
+        }
+      })
     })
-  })
+  }
 
   return (
     <Box sx={{ height: 400, width: '100%' }}>
@@ -105,6 +122,8 @@ export default function DataGridDemo() {
           </Select>
         </FormControl>
 
+        {loading ? (<CircularProgress />):(
+
         <DataGrid
           rows={arr}
           columns={colDef}
@@ -120,6 +139,7 @@ export default function DataGridDemo() {
           disableRowSelectionOnClick
           columnVisibilityModel={{id:false}}
         />
+        )}
       </Stack>
     </Box>
   );

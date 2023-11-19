@@ -41,18 +41,30 @@ def addProduct():
         "startingProductPrice": prodStartPrice,
         "currentProductPrice": prodCurPrice,
         "lowestProductPrice": prodLowestPrice,
-        "lowestProductPriceDate": datetime.now(),
-        "trackedSinceDate": datetime.now(),
+        "lowestProductPriceDate": datetime.now().strftime("%Y-%m-%d") ,
+        "trackedSinceDate": datetime.now().strftime("%Y-%m-%d") ,
         "category": data["category"],
         "saleBool": False
     }
-    with open("products.json", 'r') as f:
-        data = json.load(f)
     
-    sampleData={}
-    sampleData["Modules"] = 15
-    sampleData["Subject"] = "Maths"
-    return jsonify(productData)
+    prodCategory = data["category"]
+    fileData = {}
+    with open("products.json", 'r') as f:
+        fileData = json.load(f)
+        
+    print(productData)
+    for index, category in enumerate(fileData):
+        if category['category'] == prodCategory:
+            # insert new product into list
+            fileData[index]["productList"].append(productData)
+    
+    print(fileData)
+    with open("products.json", 'w') as f:
+        # Write to file
+        json_object = json.dumps(fileData, indent=4)
+        f.write(json_object)
+        
+    return jsonify(fileData)
 
 if __name__ == "__main__":
     app.run(debug=True, port=8080)
