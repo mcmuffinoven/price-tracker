@@ -19,19 +19,7 @@ const actions = [
 ];
 
 
-export default function BasicSpeedDial() {
-    // function handleClick (e:any,operation:any){
-    //     e.preventDefault();
-    //     if(operation=="copy"){
-    //       // do something 
-    //         console.log("Copy")
-    //         return <MaxWidthDialog></MaxWidthDialog>
-    //     }else if(operation=="tag"){
-    //       //do something else
-    //     }
-    //     // setOpen(!open);// to close the speed dial, remove this line if not needed.
-    //   };
-
+export default function BasicSpeedDial(props:any) {
     const [openPopup, setOpenPopup] = useState(false)
   return (
     <Box sx={{ height: 320, transform: 'translateZ(0px)', flexGrow: 1 }}>

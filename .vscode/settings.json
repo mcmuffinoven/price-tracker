@@ -1,0 +1,13 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "price-tracker-db.cwukgvtlbuie.us-east-2.rds.amazonaws.com",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "database": "price-tracker",
+            "username": "postgres",
+            "name": "price-tracker-db"
+        }
+    ]
+}

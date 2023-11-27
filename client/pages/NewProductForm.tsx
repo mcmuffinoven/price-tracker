@@ -36,7 +36,6 @@ export default function ProductForm(props:any) {
     const handleSubmit=(event:any) =>{
       event.preventDefault();
       console.log('Product:',productName, 'Link:', productLink, 'Date:', productDate, 'Category:', productCategory); 
-      // ..code to submit form to backend here...
       const postData = JSON.stringify({
         "productName": productName,
         "trackedSinceDate": productDate,
@@ -53,13 +52,14 @@ export default function ProductForm(props:any) {
         .then((response) => response.json())
         .then((data) => {
             console.log(data);
+            window.location.reload(false);
             // Handle data
         })
         .catch((err) => {
             console.log(err.message);
         });
   }
-    
+
   return (
     <>
       <form onSubmit={handleSubmit}>

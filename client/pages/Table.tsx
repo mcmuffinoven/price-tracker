@@ -13,7 +13,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 import cats from "./products.json"
 
-export default function DataTable() {
+
+export default function DataTable(props:any) {
 
   const [tableData, setTableData] = useState<any>([]);
   const [loading, setLoading] = useState(false);
@@ -130,7 +131,7 @@ export default function DataTable() {
           initialState={{
             pagination: {
               paginationModel: {
-                pageSize: 5,
+                pageSize: 25,
               },
             },
           }}
