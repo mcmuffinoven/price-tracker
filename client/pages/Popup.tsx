@@ -17,7 +17,6 @@ export default function Popup(props:any){
         <Dialog open={openPopup} maxWidth="md">
             <DialogTitle>
                 <Stack direction="row" spacing={2}>
-
                     <Typography variant="h6">
                         {title}
                     </Typography>

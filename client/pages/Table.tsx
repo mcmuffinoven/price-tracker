@@ -102,7 +102,7 @@ export default function DataTable(props:any) {
   }
 
   return (
-    <Box sx={{ height: 400, width: '100%' }}>
+    <Box sx={{ height: 700, width: '100%' }}>
       <Stack>
         <FormControl sx={{ width: '200px', pb: 1 }}>
           <InputLabel id="category-selector">Category</InputLabel>
@@ -126,19 +126,17 @@ export default function DataTable(props:any) {
         {loading ? (<CircularProgress />):(
 
         <DataGrid
+          autoHeight
           rows={arr}
           columns={colDef}
-          initialState={{
-            pagination: {
-              paginationModel: {
-                pageSize: 25,
-              },
-            },
-          }}
-          pageSizeOptions={[5]}
           checkboxSelection={false}
           disableRowSelectionOnClick
           columnVisibilityModel={{id:false}}
+          initialState={{
+            pagination: {
+              paginationModel: { pageSize: 5, page: 0 },
+            },
+          }}
         />
         )}
       </Stack>

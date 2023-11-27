@@ -53,7 +53,7 @@ export default function ProductForm(props:any) {
         .then((response) => response.json())
         .then((data) => {
             console.log(data);
-            window.location.reload(false);
+            window.location.reload();
             // Handle data
         })
         .catch((err) => {

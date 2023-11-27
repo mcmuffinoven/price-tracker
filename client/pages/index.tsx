@@ -1,21 +1,25 @@
 import React, {useEffect, useState} from 'react';
 
-import {Container, Grid, Typography} from "@mui/material"
-import { TourCard, Prod, Category} from './TourCard';
+import {Container, Box, Grid, Paper, Stack, Typography} from "@mui/material"
 import PrimarySearchAppBar from './AppBar';
-import cats from "./products.json"
 import DataTable from './Table';
 import BasicSpeedDial from './AddProductDial';
 
 function index() {
   return (
     <div className = "App">
-      <PrimarySearchAppBar></PrimarySearchAppBar>        
-          <Container sx={{marginY:5}}>
+      <PrimarySearchAppBar></PrimarySearchAppBar>
+      <Container>
+
+        <Stack sx={{marginY:5}}>
+          <Box>
             <DataTable></DataTable>
-            {/* <SparklineColumn></SparklineColumn> */}
-          <BasicSpeedDial></BasicSpeedDial>
-          </Container>
+          </Box>
+          <Box>
+            <BasicSpeedDial></BasicSpeedDial>
+          </Box>
+        </Stack>        
+      </Container>
     </div>
   )
 }

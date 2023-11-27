@@ -22,26 +22,20 @@ def return_home():
     fashionData = []
     groceryData = []
     cosmeticData = []
-    # Connect to an existing database
     with psycopg.connect(host="price-tracker-db.cwukgvtlbuie.us-east-2.rds.amazonaws.com", port="5432", dbname="price-tracker", user="postgres", password="postgres") as conn:
-        # Open a cursor to perform database operations
         with conn.cursor() as cur:
             # Query the database and obtain data as Python objects.
             
             cur.execute("SELECT * FROM price_tracker;")
             data = cur.fetchall()
-            # will return (1, 100, "abc'def")
-
-            # You can use `cur.fetchmany()`, `cur.fetchall()` to return a list
-            # of several records, or even iterate on the cursor
+            
             colnames = [desc[0] for desc in cur.description]
             for row in data:
                 tableList.append(list(zip(colnames, row)))
 
             # Make the changes to the database persistent
             conn.commit()
-    # tableData = dict((x, y) for x in tableList)
-    # []
+
     for row in tableList:
         product = {}
         product["id"] = row[0][1]
@@ -84,31 +78,15 @@ def addProduct():
     # 3. Otherwise, return status SUCCESS
     # handle the POST request
     
-    prodID = random.randint(100, 1000)
+    insertData = request.json
     prodStartPrice = random.randint(100,500)
     prodCurPrice = random.randint(100,500)
     prodLowestPrice = random.randint(100,500)
-    insertData = request.json
-    print(insertData)
     prodLink = insertData["productLink"]
-    
-    # productData = {
-    #     "id":prodID,
-    #     "productName": insertData["productName"],
-    #     "startingProductPrice": prodStartPrice,
-    #     "currentProductPrice": prodCurPrice,
-    #     "lowestProductPrice": prodLowestPrice,
-    #     "lowestProductPriceDate": datetime.now().strftime("%Y-%m-%d") ,
-    #     "trackedSinceDate": datetime.now().strftime("%Y-%m-%d") ,
-    #     "category": insertData["category"],
-    #     "saleBool": False
-    # }
-    
+        
     with psycopg.connect(host="price-tracker-db.cwukgvtlbuie.us-east-2.rds.amazonaws.com", port="5432", dbname="price-tracker", user="postgres", password="postgres") as conn:
-        # Open a cursor to perform database operations
         with conn.cursor() as cur:
-            # Query the database and obtain data as Python objects.
-            
+
             cur.execute("""insert into price_tracker (
                                 category,
                                 product_name,
@@ -124,12 +102,7 @@ def addProduct():
 
             conn.commit()
     
-    chopstick = {
-        'color': 'bamboo',
-        'left_handed': True
-    }
-
-    return jsonify(chopstick)
+    return json.dumps({'success':True}), 200, {'ContentType':'application/json'} 
 
 if __name__ == "__main__":
     app.run(debug=True, port=8080)
