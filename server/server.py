@@ -73,16 +73,7 @@ def return_home():
 
     tableData = [techTable, fashionTable, groceryTable, cosmeticTable]
     
-    print(tableData)
     return jsonify(tableData)
-    # # Read json file, jsonify and send over
-    # with open("products.json", 'r') as f:
-    #     data = json.load(f)
-    #     return jsonify(data)
-    # # return jsonify({
-    # #     'message': "First Page",
-    # #     'people': ['Apple',"Banana","Cherry"]
-    # # })
 
 # New post request to add a new product to the database
 @app.route("/api/addProduct", methods = ["POST"])
@@ -97,38 +88,48 @@ def addProduct():
     prodStartPrice = random.randint(100,500)
     prodCurPrice = random.randint(100,500)
     prodLowestPrice = random.randint(100,500)
-    data = request.json
+    insertData = request.json
+    print(insertData)
+    prodLink = insertData["productLink"]
     
-    productData = {
-        "id":prodID,
-        "productName": data["productName"],
-        "startingProductPrice": prodStartPrice,
-        "currentProductPrice": prodCurPrice,
-        "lowestProductPrice": prodLowestPrice,
-        "lowestProductPriceDate": datetime.now().strftime("%Y-%m-%d") ,
-        "trackedSinceDate": datetime.now().strftime("%Y-%m-%d") ,
-        "category": data["category"],
-        "saleBool": False
+    # productData = {
+    #     "id":prodID,
+    #     "productName": insertData["productName"],
+    #     "startingProductPrice": prodStartPrice,
+    #     "currentProductPrice": prodCurPrice,
+    #     "lowestProductPrice": prodLowestPrice,
+    #     "lowestProductPriceDate": datetime.now().strftime("%Y-%m-%d") ,
+    #     "trackedSinceDate": datetime.now().strftime("%Y-%m-%d") ,
+    #     "category": insertData["category"],
+    #     "saleBool": False
+    # }
+    
+    with psycopg.connect(host="price-tracker-db.cwukgvtlbuie.us-east-2.rds.amazonaws.com", port="5432", dbname="price-tracker", user="postgres", password="postgres") as conn:
+        # Open a cursor to perform database operations
+        with conn.cursor() as cur:
+            # Query the database and obtain data as Python objects.
+            
+            cur.execute("""insert into price_tracker (
+                                category,
+                                product_name,
+                                starting_product_price,
+                                current_product_price,
+                                lowest_product_price,
+                                lowest_product_price_date,
+                                tracked_since_date,
+                                product_link,
+                                sale_bool
+                                )
+                            values (%s, %s, %s, %s, %s, %s, %s, %s, %s);""",(insertData["category"], insertData["productName"],prodStartPrice, prodCurPrice, prodLowestPrice, datetime.now().strftime("%Y-%m-%d"),datetime.now().strftime("%Y-%m-%d"), prodLink, True))
+
+            conn.commit()
+    
+    chopstick = {
+        'color': 'bamboo',
+        'left_handed': True
     }
-    
-    prodCategory = data["category"]
-    fileData = {}
-    with open("products.json", 'r') as f:
-        fileData = json.load(f)
-        
-    print(productData)
-    for index, category in enumerate(fileData):
-        if category['category'] == prodCategory:
-            # insert new product into list
-            fileData[index]["productList"].append(productData)
-    
-    print(fileData)
-    with open("products.json", 'w') as f:
-        # Write to file
-        json_object = json.dumps(fileData, indent=4)
-        f.write(json_object)
-        
-    return jsonify(fileData)
+
+    return jsonify(chopstick)
 
 if __name__ == "__main__":
     app.run(debug=True, port=8080)

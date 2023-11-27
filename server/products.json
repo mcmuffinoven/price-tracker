@@ -1,32 +1,30 @@
 [
     {
         "category": "Tech",
-        "productList":[
+        "productList": [
             {
-                "id":1,
+                "id": 1,
                 "productName": "Logitec G502 X",
-                "startingProductPrice": 110.00,
+                "startingProductPrice": 110.0,
                 "currentProductPrice": 109.33,
-                "lowestProductPrice": 100.00,
+                "lowestProductPrice": 100.0,
                 "lowestProductPriceDate": "2012-04-23",
                 "trackedSinceDate": "2012-03-20",
                 "category": "Tech",
-                "productLink":"https://www.bestbuy.ca/en-ca/product/insignia-32-1080p-fhd-led-smart-tv-ns-32f202ca23-fire-tv-edition-2022-only-at-best-buy/16016210",
+                "productLink": "https://www.bestbuy.ca/en-ca/product/insignia-32-1080p-fhd-led-smart-tv-ns-32f202ca23-fire-tv-edition-2022-only-at-best-buy/16016210",
                 "saleBool": true
-        
             },
             {
-                "id":4,
+                "id": 4,
                 "productName": "Asus OLED Monitor",
-                "startingProductPrice": 2010.00,
+                "startingProductPrice": 2010.0,
                 "currentProductPrice": 2003.21,
-                "lowestProductPrice": 1999.00,
+                "lowestProductPrice": 1999.0,
                 "lowestProductPriceDate": "2012-04-23",
                 "trackedSinceDate": "2012-04-20",
                 "category": "Tech",
-                "productLink":"https://www.bestbuy.ca/en-ca/product/insignia-32-1080p-fhd-led-smart-tv-ns-32f202ca23-fire-tv-edition-2022-only-at-best-buy/16016210",
+                "productLink": "https://www.bestbuy.ca/en-ca/product/insignia-32-1080p-fhd-led-smart-tv-ns-32f202ca23-fire-tv-edition-2022-only-at-best-buy/16016210",
                 "saleBool": true
-        
             }
         ]
     },
@@ -34,17 +32,16 @@
         "category": "Fashion",
         "productList": [
             {
-                "id":2,
+                "id": 2,
                 "productName": "Ski Goggles",
-                "startingProductPrice": 200.00,
-                "currentProductPrice": 200.00,
-                "lowestProductPrice": 192.00,
+                "startingProductPrice": 200.0,
+                "currentProductPrice": 200.0,
+                "lowestProductPrice": 192.0,
                 "lowestProductPriceDate": "2012-04-23",
                 "trackedSinceDate": "2012-03-22",
                 "category": "Fashion",
-                "productLink":"https://www.bestbuy.ca/en-ca/product/insignia-32-1080p-fhd-led-smart-tv-ns-32f202ca23-fire-tv-edition-2022-only-at-best-buy/16016210",
+                "productLink": "https://www.bestbuy.ca/en-ca/product/insignia-32-1080p-fhd-led-smart-tv-ns-32f202ca23-fire-tv-edition-2022-only-at-best-buy/16016210",
                 "saleBool": false
-        
             }
         ]
     },
@@ -52,17 +49,16 @@
         "category": "Grocery",
         "productList": [
             {
-                "id":3,
+                "id": 3,
                 "productName": "Coffee",
-                "startingProductPrice": 67.00,
+                "startingProductPrice": 67.0,
                 "currentProductPrice": 65.3,
                 "lowestProductPrice": 33,
                 "lowestProductPriceDate": "2012-04-23",
                 "trackedSinceDate": "2012-01-20",
                 "category": "Grocery",
-                "productLink":"https://www.bestbuy.ca/en-ca/product/insignia-32-1080p-fhd-led-smart-tv-ns-32f202ca23-fire-tv-edition-2022-only-at-best-buy/16016210",
+                "productLink": "https://www.bestbuy.ca/en-ca/product/insignia-32-1080p-fhd-led-smart-tv-ns-32f202ca23-fire-tv-edition-2022-only-at-best-buy/16016210",
                 "saleBool": true
-        
             }
         ]
     },
@@ -70,7 +66,7 @@
         "category": "Cosmetics",
         "productList": [
             {
-                "id":5,
+                "id": 5,
                 "productName": "Avene Cream",
                 "startingProductPrice": 22.23,
                 "currentProductPrice": 22.23,
@@ -78,7 +74,18 @@
                 "lowestProductPriceDate": "2012-04-23",
                 "trackedSinceDate": "2012-03-20",
                 "category": "Cosmetics",
-                "productLink":"https://www.bestbuy.ca/en-ca/product/insignia-32-1080p-fhd-led-smart-tv-ns-32f202ca23-fire-tv-edition-2022-only-at-best-buy/16016210",
+                "productLink": "https://www.bestbuy.ca/en-ca/product/insignia-32-1080p-fhd-led-smart-tv-ns-32f202ca23-fire-tv-edition-2022-only-at-best-buy/16016210",
+                "saleBool": false
+            },
+            {
+                "id": 553,
+                "productName": "asd",
+                "startingProductPrice": 444,
+                "currentProductPrice": 419,
+                "lowestProductPrice": 300,
+                "lowestProductPriceDate": "2023-11-27",
+                "trackedSinceDate": "2023-11-27",
+                "category": "Cosmetics",
                 "saleBool": false
             }
         ]

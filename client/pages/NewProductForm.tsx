@@ -38,6 +38,7 @@ export default function ProductForm(props:any) {
       console.log('Product:',productName, 'Link:', productLink, 'Date:', productDate, 'Category:', productCategory); 
       const postData = JSON.stringify({
         "productName": productName,
+        "productLink": productLink,
         "trackedSinceDate": productDate,
         "category": productCategory,
       })
