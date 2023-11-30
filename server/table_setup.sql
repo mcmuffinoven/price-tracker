@@ -1,5 +1,11 @@
-create table if not exists price_tracker(
+create table if not exists users(
     id serial primary key not null,
+    user_id varchar not null
+);
+
+create table if not exists products(
+    id serial primary key not null,
+    fk_user_id int references users(id) not null,
     category varchar not null,
     product_name varchar unique not null,
     starting_product_price float not null,
@@ -11,7 +17,8 @@ create table if not exists price_tracker(
     sale_bool boolean not null
 );
 
-insert into price_tracker (
+insert into products (
+        fk_user_id,
         category,
         product_name,
         starting_product_price,
@@ -23,6 +30,7 @@ insert into price_tracker (
         sale_bool
     )
 values (
+        (SELECT id from users where user_id='yG-v__MPOUP_G2xRJ3tyoofCDzeQzkDv'),
         'Tech',
         'Logitec G502 X',
         472.00,
@@ -34,7 +42,8 @@ values (
         false
     );
 
-insert into price_tracker (
+insert into products (
+        fk_user_id,
         category,
         product_name,
         starting_product_price,
@@ -46,6 +55,7 @@ insert into price_tracker (
         sale_bool
     )
 values (
+                (SELECT id from users where user_id='yG-v__MPOUP_G2xRJ3tyoofCDzeQzkDv'),
         'Tech',
         'Asus OLED Monitor',
         2010.00,
@@ -57,7 +67,8 @@ values (
         true
     );
 
-insert into price_tracker (
+insert into products (
+        fk_user_id,
         category,
         product_name,
         starting_product_price,
@@ -69,6 +80,7 @@ insert into price_tracker (
         sale_bool
     )
 values (
+                (SELECT id from users where user_id='yG-v__MPOUP_G2xRJ3tyoofCDzeQzkDv'),
         'Fashion',
         'Ski Goggles',
         200.00,
@@ -80,7 +92,8 @@ values (
         false
     );
 
-insert into price_tracker (
+insert into products (
+        fk_user_id,
         category,
         product_name,
         starting_product_price,
@@ -92,6 +105,7 @@ insert into price_tracker (
         sale_bool
     )
 values (
+                (SELECT id from users where user_id='yG-v__MPOUP_G2xRJ3tyoofCDzeQzkDv'),
         'Grocery',
         'Coffee',
         67.00,
@@ -103,7 +117,8 @@ values (
         true
     );
 
-insert into price_tracker (
+insert into products (
+        fk_user_id,
         category,
         product_name,
         starting_product_price,
@@ -115,6 +130,7 @@ insert into price_tracker (
         sale_bool
     )
 values (
+                (SELECT id from users where user_id='yG-v__MPOUP_G2xRJ3tyoofCDzeQzkDv'),
                 'Cosmetics',
                 'Avene Cream',
                 22.23,

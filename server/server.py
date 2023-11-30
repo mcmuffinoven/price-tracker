@@ -15,40 +15,52 @@ app = Flask(__name__)
 CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
-@app.route("/api/home", methods = ["GET"])
+@app.route("/api/home", methods = ["GET", "POST"])
+@cross_origin()
 def return_home():
     tableList=[]
     techData = []
     fashionData = []
     groceryData = []
     cosmeticData = []
-    with psycopg.connect(host="price-tracker-db.cwukgvtlbuie.us-east-2.rds.amazonaws.com", port="5432", dbname="price-tracker", user="postgres", password="postgres") as conn:
+    
+    userID = request.json["user"]
+    print(userID)
+    with psycopg.connect(host="192.168.1.176", port="5432", dbname="price_tracker", user="postgres", password="postgres") as conn:
+    # with psycopg.connect(host="price-tracker-db.cwukgvtlbuie.us-east-2.rds.amazonaws.com", port="5432", dbname="price-tracker", user="postgres", password="postgres") as conn:
         with conn.cursor() as cur:
             # Query the database and obtain data as Python objects.
             
-            cur.execute("SELECT * FROM price_tracker;")
-            data = cur.fetchall()
-            
-            colnames = [desc[0] for desc in cur.description]
-            for row in data:
-                tableList.append(list(zip(colnames, row)))
+            try:
+                # select * from products inner join users on products.fk_user_id = users.id;
+                cur.execute("select * from products inner join users on products.fk_user_id = (select id from users where user_id = %s);", (userID,))
+                data = cur.fetchall()
+                colnames = [desc[0] for desc in cur.description]
+                for row in data:
+                    tableList.append(list(zip(colnames, row)))
 
-            # Make the changes to the database persistent
-            conn.commit()
+                # Make the changes to the database persistent
+                conn.commit()
+            except Exception as e:
+                print(e)
+                return json.dumps({'success': False}), 404, {'ContentType':'application/json'} 
 
+    # Assign this dynamically in the future
     for row in tableList:
+        # print(row)
         product = {}
         product["id"] = row[0][1]
-        product["category"] = row[1][1]
-        product["productName"] = row[2][1]
-        product["startingProductPrice"] = row[3][1]
-        product["currentProductPrice"] = row[4][1]
-        product["lowestProductPrice"] = row[5][1]
-        product["lowestProductPriceDate"] = row[6][1]
-        product["trackedSinceDate"] = row[7][1]
-        product["productLink"] = row[8][1]
-        product["saleBool"]=row[9][1]
-        rowCategory = row[1][1]
+        product["user_id"] = row[1][1]
+        product["category"] = row[2][1]
+        product["productName"] = row[3][1]
+        product["startingProductPrice"] = row[4][1]
+        product["currentProductPrice"] = row[5][1]
+        product["lowestProductPrice"] = row[6][1]
+        product["lowestProductPriceDate"] = row[7][1]
+        product["trackedSinceDate"] = row[8][1]
+        product["productLink"] = row[9][1]
+        product["saleBool"]=row[10][1]
+        rowCategory = row[2][1]
         if rowCategory == "Tech":
             techData.append(product)
         elif rowCategory == "Fashion":
@@ -83,8 +95,9 @@ def addProduct():
     prodCurPrice = random.randint(100,500)
     prodLowestPrice = random.randint(100,500)
     prodLink = insertData["productLink"]
-        
-    with psycopg.connect(host="price-tracker-db.cwukgvtlbuie.us-east-2.rds.amazonaws.com", port="5432", dbname="price-tracker", user="postgres", password="postgres") as conn:
+    
+    with psycopg.connect(host="192.168.1.176", port="5432", dbname="price_tracker", user="postgres", password="postgres") as conn:
+    # with psycopg.connect(host="price-tracker-db.cwukgvtlbuie.us-east-2.rds.amazonaws.com", port="5432", dbname="price-tracker", user="postgres", password="postgres") as conn:
         with conn.cursor() as cur:
 
             cur.execute("""insert into price_tracker (
@@ -99,6 +112,7 @@ def addProduct():
                                 sale_bool
                                 )
                             values (%s, %s, %s, %s, %s, %s, %s, %s, %s);""",(insertData["category"], insertData["productName"],prodStartPrice, prodCurPrice, prodLowestPrice, datetime.now().strftime("%Y-%m-%d"),datetime.now().strftime("%Y-%m-%d"), prodLink, True))
+
 
             conn.commit()
     

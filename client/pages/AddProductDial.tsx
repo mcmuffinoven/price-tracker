@@ -16,7 +16,9 @@ const actions = [
 
 
 export default function BasicSpeedDial(props:any) {
-    const [openPopup, setOpenPopup] = useState(false)
+
+  const {user} = props
+  const [openPopup, setOpenPopup] = useState(false)
   return (
     <Box sx={{ height: 0, transform: 'translateZ(0px)', flexGrow: 1 }}>
       <SpeedDial
@@ -41,7 +43,8 @@ export default function BasicSpeedDial(props:any) {
         setOpenPopup = {setOpenPopup}>
           <ProductForm 
             openPopup = {openPopup}
-            setOpenPopup = {setOpenPopup}></ProductForm>
+            setOpenPopup = {setOpenPopup}
+            user = {user}></ProductForm>
       </Popup>
     </Box>
   );

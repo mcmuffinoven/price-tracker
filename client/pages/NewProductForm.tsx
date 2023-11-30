@@ -27,7 +27,7 @@ const categories = [
 
 export default function ProductForm(props:any) {
 
-    const {openPopup, setOpenPopup} = props;
+    const {openPopup, setOpenPopup, user} = props;
     const [productName, setProductName] = useState('')
     const [productLink, setProductLink] = useState('')
     const [productDate, setProductDate] = useState('')
@@ -41,6 +41,7 @@ export default function ProductForm(props:any) {
         "productLink": productLink,
         "trackedSinceDate": productDate,
         "category": productCategory,
+        "user": user.sid
       })
       console.log(postData)
       fetch('http://localhost:8080/api/addProduct', {

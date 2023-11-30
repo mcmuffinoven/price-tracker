@@ -1,27 +1,23 @@
-import React, {useEffect, useState} from 'react';
+import { useUser } from '@auth0/nextjs-auth0/client';
+import LoginView from './LoginView';
+import { Login } from '@mui/icons-material';
 
-import {Container, Box, Grid, Paper, Stack, Typography} from "@mui/material"
-import PrimarySearchAppBar from './AppBar';
-import DataTable from './Table';
-import BasicSpeedDial from './AddProductDial';
 
-function index() {
-  return (
-    <div className = "App">
-      <PrimarySearchAppBar></PrimarySearchAppBar>
-      <Container>
+export default function Index() {
+  const { user, error, isLoading } = useUser();
 
-        <Stack sx={{marginY:5}}>
-          <Box>
-            <DataTable></DataTable>
-          </Box>
-          <Box>
-            <BasicSpeedDial></BasicSpeedDial>
-          </Box>
-        </Stack>        
-      </Container>
-    </div>
-  )
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>{error.message}</div>;
+
+  if (user) {
+    console.log(user)
+    return (
+      <div>
+        Welcome {user.name}! <a href="/api/auth/logout">Logout</a>
+        <LoginView user={user}></LoginView>
+      </div>
+    );
+  }
+
+  return <a href="/api/auth/login">Please Login</a>;
 }
-
-export default index

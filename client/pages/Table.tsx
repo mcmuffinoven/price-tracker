@@ -16,6 +16,8 @@ import cats from "./products.json"
 
 export default function DataTable(props:any) {
 
+  const {user}=props
+
   const [tableData, setTableData] = useState<any>([]);
   const [loading, setLoading] = useState(false);
   const CategoryType = {
@@ -30,9 +32,20 @@ export default function DataTable(props:any) {
   const colDef:GridColDef[] = []
   const arr:any[] = [];
   
+
+  // Figure out if we should really use POST here
   useEffect(() => {
     setLoading(true)
-    fetch("http://localhost:8080/api/home")
+    const postData = JSON.stringify({
+      "user": user.sid
+    })
+    fetch("http://localhost:8080/api/home", {
+      method: 'POST',
+      body: postData,
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      }
+    })
       .then((response) => response.json())
       .then((data) => {
         // Loading message on load
