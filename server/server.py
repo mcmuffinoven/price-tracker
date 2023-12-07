@@ -100,7 +100,8 @@ def addProduct():
     # with psycopg.connect(host="price-tracker-db.cwukgvtlbuie.us-east-2.rds.amazonaws.com", port="5432", dbname="price-tracker", user="postgres", password="postgres") as conn:
         with conn.cursor() as cur:
 
-            cur.execute("""insert into price_tracker (
+            cur.execute("""insert into products (
+                                fk_user_id,
                                 category,
                                 product_name,
                                 starting_product_price,
@@ -111,7 +112,7 @@ def addProduct():
                                 product_link,
                                 sale_bool
                                 )
-                            values (%s, %s, %s, %s, %s, %s, %s, %s, %s);""",(insertData["category"], insertData["productName"],prodStartPrice, prodCurPrice, prodLowestPrice, datetime.now().strftime("%Y-%m-%d"),datetime.now().strftime("%Y-%m-%d"), prodLink, True))
+                            values ((SELECT id from users where user_id=%s),%s, %s, %s, %s, %s, %s, %s, %s, %s);""",(insertData["user"],insertData["category"], insertData["productName"],prodStartPrice, prodCurPrice, prodLowestPrice, datetime.now().strftime("%Y-%m-%d"),datetime.now().strftime("%Y-%m-%d"), prodLink, True))
 
 
             conn.commit()

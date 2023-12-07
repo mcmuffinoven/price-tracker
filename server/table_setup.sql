@@ -55,7 +55,7 @@ insert into products (
         sale_bool
     )
 values (
-                (SELECT id from users where user_id='yG-v__MPOUP_G2xRJ3tyoofCDzeQzkDv'),
+        (SELECT id from users where user_id='yG-v__MPOUP_G2xRJ3tyoofCDzeQzkDv'),
         'Tech',
         'Asus OLED Monitor',
         2010.00,
