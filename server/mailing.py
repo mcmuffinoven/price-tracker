@@ -44,7 +44,7 @@ class Mailer():
         return send_message
 
 
-    def authenticate(self):
+    def authenticate_creds(self):
         """Shows basic usage of the Gmail API.
         """
         creds = None
@@ -71,7 +71,7 @@ def main():
     # Initiate Mailer 
     mailer = Mailer()
     product = "abc"
-    creds = mailer.authenticate()
+    creds = mailer.authenticate_creds()
     mailer.gmail_send_message(creds, product)
 
 if __name__ == '__main__':
