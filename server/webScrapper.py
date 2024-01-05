@@ -38,7 +38,10 @@ class WebScrapper:
   
 		valid_url_dict = {
 			"Amazon": "",
-			"Best Buy": ".//span[@data-automation='product-price']/span"
+			"Best Buy": {
+       						"product_price": ".//span[@data-automation='product-price']/span"
+                			,"product_name":"productName_2KoPa"
+                   		}
    }
   
 		# Not en efficient way, when there are many supported urls
@@ -52,20 +55,22 @@ class WebScrapper:
 		else:
 			raise Exception("URL is not supported!")
    
+	def find_XPATH(self, XPATH):
+		return self.browser.find_element(By.XPATH, XPATH).get_attribute("innerHTML")
+   
 	def get_product_current_price(self, url:str):
 		self.browser.get(url)
-		XPATH = WebScrapper.check_support_url(url)
-		priceBox = self.browser.find_element(By.XPATH, XPATH).get_attribute("innerHTML")
+		XPATH = WebScrapper.check_support_url(url)['product_price']
+		product_price_raw = self.find_XPATH(XPATH)
   
 		# Strip everything except decimal and digit, then convert to float
-		price = float(re.sub(r'[^0-9'+self.decimal_point_char+r']+', '', priceBox))
-		print(price)
+		product_price = float(re.sub(r'[^0-9'+self.decimal_point_char+r']+', '', product_price_raw))
+		print(product_price)
   
+	# Might not be needed, since the user could provide an alias 
 	def get_product_name(self, url:str):
 		self.browser.get(url)
-		XPATH = WebScrapper.check_support_url(url)
-		priceBox = self.browser.find_element(By.XPATH, XPATH).get_attribute("innerHTML")
-
-		# Strip everything except decimal and digit, then convert to float
-		price = float(re.sub(r'[^0-9'+self.decimal_point_char+r']+', '', priceBox))
-		print(price)
+		XPATH = WebScrapper.check_support_url(url)['product_name']
+		product_name = self.find_XPATH(XPATH)
+  
+		print(product_name)

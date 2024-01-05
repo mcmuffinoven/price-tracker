@@ -20,9 +20,15 @@ class Product():
         self.product_sale = self.is_product_sale()
         
     def is_product_sale(self):
+        # 1. Get Current Price 
+        # 2. Check database of latest price 
+        # 3. Check if lower
         return
     
     def get_lowest_price(self):
+        # 1. Get Current Price 
+        # 2. Check Database for lowest price
+        # 3. Return Lowest
         return
             
         
