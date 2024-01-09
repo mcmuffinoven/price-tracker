@@ -5,7 +5,7 @@ import psycopg2
 from psycopg2 import OperationalError
 from db_parser import get_db_info
 from datetime import datetime
-from webScrapper import WebScrapper
+from web_scrapper import WebScrapper
 
 
 # ----- Config Parameters ----- #
@@ -41,16 +41,34 @@ class Postgres():
         
         with connection.cursor() as cur:
 
-            cur.execute(query,(parameters,))
+            try:
+                cur.execute(query,(parameters,))
             
+            except Exception as error:
+                print ("Oops! An exception has occured:", error)
+                print ("Exception TYPE:", type(error))
+                            
             connection.commit()
         return
     
+    @staticmethod
+    def generic_fetch(connection, query, parameters):
+        with connection.cursor() as cur:
+
+            try:
+                cur.execute(query,(parameters,))
+                data = cur.fetchall()
+            except Exception as error:
+                print ("Oops! An exception has occured:", error)
+                print ("Exception TYPE:", type(error))
+        return data
+    
+    # ----- Create  ----- #
     # Add new product
     def insert_product(self, data):
                 
-        query = """
-            insert into %s (
+        query = f"""
+            insert into {self.default_table_name} (
             fk_user_id,
             category,
             product_name,
@@ -82,11 +100,24 @@ class Postgres():
         
         return
 
+
+    # ----- Read ----- #
+    def fetch_product(self):
+        query = f"""
+                    select * from {self.default_table_name} inner join users on products.fk_user_id = (select id from users where user_id = %s);
+        """
+        parameters = ()
+        Postgres.generic_fetch(connection=self.connection, query=query, parameters=parameters)
+        return
+    
+
+    # ----- Update ----- #
+
     # Update product price
     def update_current_product_price(self):
         
-        query = """
-                    UPDATE %s
+        query = f"""
+                    UPDATE {self.default_table_name}
                     SET current_product_price = %s
                     WHERE fk_user_id = (SELECT id from users where user_id=%s) AND product_name = %s
         """
@@ -104,25 +135,12 @@ class Postgres():
         
         return
     
-    # Delete row
-    def remove_product(self):
-        
-        query = """
-                    DELETE FROM %s 
-                    WHERE fk_user_id = (SELECT id from users where user_id=%s) AND product_name = %s
-        """
-        
-        parameters = None
-        
-        Postgres.generic_insert(connection=self.connection, query=query, parameters=parameters)
-        
-        return
     
     # Update is_sale bool
     def update_product_sale(self):
         
-        query = """
-                    UPDATE %s
+        query = f"""
+                    UPDATE {self.default_table_name}
                     SET sale_bool = %s
                     WHERE fk_user_id = (SELECT id from users where user_id=%s) AND product_name = %s
         """
@@ -135,3 +153,19 @@ class Postgres():
     # Update entire row
     def update_product_info(self):
         return
+    
+    # ----- Delete  ----- #
+    # Delete row
+    def remove_product(self):
+        
+        query = f"""
+                    DELETE FROM {self.default_table_name} 
+                    WHERE fk_user_id = (SELECT id from users where user_id=%s) AND product_name = %s
+        """
+        
+        parameters = None
+        
+        Postgres.generic_insert(connection=self.connection, query=query, parameters=parameters)
+        
+        return
+    

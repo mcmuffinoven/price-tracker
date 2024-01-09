@@ -3,7 +3,7 @@
 # Product Auto Fetching
 # Product logic to check sales
 from datetime import datetime
-from webScrapper import WebScrapper
+from web_scrapper import WebScrapper
 
 class Product():
     def __init__(self, user_id, product_category, product_link):
