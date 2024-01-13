@@ -17,6 +17,8 @@ import locale
 # 7. If lower, update database, and alert user.
 # 8. Else, wait until next check period. 
 # """
+import sys
+sys.path.append('../')
 
 class WebScrapper:
     # Define Chrome Options
@@ -26,7 +28,7 @@ class WebScrapper:
 	# Ignore SSL error when selenium makes handshake with chrome. 
 	chrome_options.add_argument('--ignore-certificate-errors-spki-list')
 	# chrome_options.add_argument('--headless')
-	chrome_options.add_argument('log-level=3')
+	chrome_options.add_argument('--log-level=3')
 	decimal_point_char = locale.localeconv()['decimal_point']
  
 	def __init__(self):
@@ -65,7 +67,8 @@ class WebScrapper:
   
 		# Strip everything except decimal and digit, then convert to float
 		product_price = float(re.sub(r'[^0-9'+self.decimal_point_char+r']+', '', product_price_raw))
-		print(product_price)
+  
+		return product_price
   
 	# Might not be needed, since the user could provide an alias 
 	def get_product_name(self, url:str):

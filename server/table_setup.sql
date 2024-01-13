@@ -1,6 +1,6 @@
 create table if not exists users(
     id serial primary key not null,
-    user_id varchar not null
+    user_id varchar not null unique
 );
 
 create table if not exists products(

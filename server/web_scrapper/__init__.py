@@ -1,1 +1,1 @@
-from web_scrapper import WebScrapper
+from . import web_scrapper

@@ -1,1 +1,1 @@
-from mailing import Mailer
+from . import mailing

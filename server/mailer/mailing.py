@@ -9,7 +9,10 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 import base64
 from email.mime.text import MIMEText
+import os
 
+import sys
+sys.path.append('../')
 
 SCOPES = ['https://mail.google.com/']
 
@@ -17,15 +20,21 @@ class Mailer():
     def __init__(self):
         self.mail_from = "mustachio1125@gmail.com"
         self.mail_subject_header = "Sale Alert For "
-        self.creds_file = "token.json"
-        self.secrets_file = "credentials.json"
-        self.mail_body = """Your product is on sale!!"""
+        # Revisit some day... Is this a good way of doing relative files?
+        self.creds_file = os.path.join(os.path.dirname(__file__), "token.json")
+        self.secrets_file = os.path.join(os.path.dirname(__file__), "credentials.json")
+        self.mail_body = """Hi {}, your {} is on sale! The price dropped from ${} to ${}"""
         
-    def gmail_send_message(self, creds):
+    def gmail_send_message(self, creds, product):
 
         try:
+            current_product_price = product["current_price"]
+            prev_product_price = product["prev_price"]
+            product_name = product["product_name"]
+            user_name = product["user_id"]
+            
             service = build('gmail', 'v1', credentials=creds)
-            message = MIMEText(self.mail_body)
+            message = MIMEText(self.mail_body.format(user_name, product_name, prev_product_price, current_product_price))
             message['To'] = 'mustachio1125@gmail.com'
             message['From'] = self.mail_from
             message['Subject'] = self.mail_subject_header
