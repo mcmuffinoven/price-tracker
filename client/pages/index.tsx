@@ -1,7 +1,7 @@
 import { useUser } from '@auth0/nextjs-auth0/client';
 import LoginView from './LoginView';
 import { Login } from '@mui/icons-material';
-
+import PreLoginView from './PreLoginView';
 
 export default function Index() {
   const { user, error, isLoading } = useUser();
@@ -12,12 +12,13 @@ export default function Index() {
   if (user) {
     console.log(user)
     return (
-      <div>
-        Welcome {user.name}! <a href="/api/auth/logout">Logout</a>
-        <LoginView user={user}></LoginView>
-      </div>
-    );
+        <div>
+          Welcome {user.name}! <a href="/api/auth/logout">Logout</a>
+          <LoginView user={user}></LoginView>
+        </div>
+      );
   }
 
-  return <a href="/api/auth/login">Please Login</a>;
+    return <PreLoginView></PreLoginView>
+  // return <a href="/api/auth/login">Please Login</a>;
 }

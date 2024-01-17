@@ -55,6 +55,8 @@ export default function DataTable(props:any) {
         })
         }, []);
 
+  console.log(tableData)
+
   if (!loading && tableData.length!=0){
     // Should probably hard code these cols 
     // When current user has empty list
