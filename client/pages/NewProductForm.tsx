@@ -6,6 +6,8 @@ import MenuItem from '@mui/material/MenuItem';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { red } from '@mui/material/colors';
 
+import axios from 'axios'
+
 const categories = [
   {
     value: 'Tech',
@@ -36,6 +38,19 @@ export default function ProductForm(props:any) {
     const handleSubmit=(event:any) =>{
       event.preventDefault();
       console.log('Product:',productName, 'Link:', productLink, 'Date:', productDate, 'Category:', productCategory); 
+
+
+      const userID = JSON.stringify({
+        "user":user.sid
+      })
+      
+
+      axios.post('http://localhost:8080/api/adduser', userID, {
+        headers: {"Content-Type": "application/json"}
+      })
+      .then((response) => console.log(response))
+      .catch((error) => console.log(error));
+      
       const postData = JSON.stringify({
         "productName": productName,
         "productLink": productLink,
@@ -43,15 +58,13 @@ export default function ProductForm(props:any) {
         "category": productCategory,
         "user": user.sid
       })
-      console.log(postData)
-      fetch('http://localhost:8080/api/addProduct', {
-        method: 'POST',
-        body: postData,
+      axios.post('http://localhost:8080/api/addproduct', postData, {
+        
         headers: {
-          'Content-type': 'application/json; charset=UTF-8',
+          'Content-type': 'application/json',
         },
       })
-        .then((response) => response.json())
+        .then((response) => response)
         .then((data) => {
             console.log(data);
             window.location.reload();
