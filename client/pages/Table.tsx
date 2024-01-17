@@ -57,26 +57,29 @@ export default function DataTable(props:any) {
 
   if (!loading && tableData.length!=0){
     // Should probably hard code these cols 
-          
-    for (const [key, value] of Object.entries(tableData[0].productList[0])) {
-      const parameters:any = {
-        field:key,
-        headerName: key,
-        type: "string",
-        width: 150,
-        editable: false,
-      }
-      if (key == "saleBool"){
-        parameters['renderCell'] = (params:any) => {
-          return <Chip variant="outlined" sx={{justifyContent:"center"}} size="small" {...getChipProps(params)} />;
+    // When current user has empty list
+    if(tableData[0].productList[0] != undefined){
+
+      for (const [key, value] of Object.entries(tableData[0].productList[0])) {
+        const parameters:any = {
+          field:key,
+          headerName: key,
+          type: "string",
+          width: 150,
+          editable: false,
         }
-      }
-      if(key == "productLink"){
-        parameters['renderCell'] = (params:any) => {
-          return <a href={params.value} target="_blank">{params.value}</a>
+        if (key == "saleBool"){
+          parameters['renderCell'] = (params:any) => {
+            return <Chip variant="outlined" sx={{justifyContent:"center"}} size="small" {...getChipProps(params)} />;
+          }
         }
+        if(key == "productLink"){
+          parameters['renderCell'] = (params:any) => {
+            return <a href={params.value} target="_blank">{params.value}</a>
+          }
+        }
+        colDef.push(parameters)
       }
-      colDef.push(parameters)
     }
 
     function getChipProps(params: GridRenderCellParams): ChipProps {
@@ -130,7 +133,7 @@ export default function DataTable(props:any) {
           >
             <MenuItem value={CategoryType.All}>All</MenuItem>
             <MenuItem value={CategoryType.Tech}>Tech</MenuItem>
-            <MenuItem value={CategoryType.Grocery}>Grcoery</MenuItem>
+            <MenuItem value={CategoryType.Grocery}>Grocery</MenuItem>
             <MenuItem value={CategoryType.Fashion}>Fashion</MenuItem>
             <MenuItem value={CategoryType.Cosmetics}>Cosmetics</MenuItem>
           </Select>
