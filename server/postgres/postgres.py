@@ -49,10 +49,11 @@ class Postgres():
                 # print(query, parameters)
                 cur.execute(query,(*parameters,))
                 data = cur.fetchall()
+                colnames = [desc[0] for desc in cur.description]
             except Exception as error:
                 print ("Oops! An exception has occured:", error)
                 print ("Exception TYPE:", type(error))
-        return data
+        return data, colnames
     
     def scrape_data(self, url):
         scraped_data = {}
@@ -80,7 +81,7 @@ class Postgres():
     def insert_user(self, user_id):
         query = f"""
                     INSERT INTO {Postgres.users_table}
-                    (user_id) values (%s)
+                    (user_id) values (%s) ON CONFLICT DO NOTHING;
         """
         
         Postgres.generic_insert(connection=self.connection, query=query, parameters=[user_id])
@@ -139,9 +140,17 @@ class Postgres():
                     select * from {self.default_table_name} inner join users on products.fk_user_id = (select id from users where user_id = %s) and products.product_name = %s;
         """
         parameters = (user_id, product_name)
-        data = Postgres.generic_fetch(connection=self.connection, query=query, parameters=list(parameters))
-        return data
+        data, colnames = Postgres.generic_fetch(connection=self.connection, query=query, parameters=list(parameters))
+        return data, colnames
     
+    def fetch_all_user_products(self, user_id):
+        query = f"""
+                select * from products inner join users on products.fk_user_id = (select id from users where user_id = %s) where users.user_id = %s;
+            """
+        parameters = (user_id, user_id)
+        data, colnames = Postgres.generic_fetch(connection=self.connection, query=query, parameters=list(parameters))
+        
+        return data, colnames
 
     # ----- Update ----- #
 
