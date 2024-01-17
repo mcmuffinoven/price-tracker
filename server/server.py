@@ -3,6 +3,9 @@
 Returns:
     _type_: _description_
 """
+
+import sys
+sys.path.append("..") # Adds higher directory to python modules path.
 import json
 from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
@@ -10,14 +13,17 @@ import random
 from datetime import datetime
 import psycopg
 
+from postgres.postgres import Postgres
+
 # app instance
 app = Flask(__name__)
-CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.route("/api/home", methods = ["GET", "POST"])
 @cross_origin()
 def return_home():
+    print("Access Home Page")
     tableList=[]
     techData = []
     fashionData = []
@@ -26,7 +32,7 @@ def return_home():
     
     userID = request.json["user"]
     print(userID)
-    with psycopg.connect(host="192.168.1.176", port="5432", dbname="price_tracker", user="postgres", password="postgres") as conn:
+    with psycopg.connect(host="192.168.1.195", port="5432", dbname="price_tracker", user="postgres", password="postgres") as conn:
     # with psycopg.connect(host="price-tracker-db.cwukgvtlbuie.us-east-2.rds.amazonaws.com", port="5432", dbname="price-tracker", user="postgres", password="postgres") as conn:
         with conn.cursor() as cur:
             # Query the database and obtain data as Python objects.
@@ -78,25 +84,26 @@ def return_home():
     cosmeticTable={"category":"Cosmetics", "productList":cosmeticData}
 
     tableData = [techTable, fashionTable, groceryTable, cosmeticTable]
-    
+    print(tableData)
     return jsonify(tableData)
 
 # New post request to add a new product to the database
-@app.route("/api/addProduct", methods = ["POST"])
+@app.route("/api/addproduct", methods = ["POST"])
 @cross_origin()
-def addProduct():
+def add_product():
     # 1. Add product to database 
     # 2. If error in database, send back request with error 
     # 3. Otherwise, return status SUCCESS
     # handle the POST request
-    
+    print("add product")
     insertData = request.json
     prodStartPrice = random.randint(100,500)
     prodCurPrice = random.randint(100,500)
     prodLowestPrice = random.randint(100,500)
     prodLink = insertData["productLink"]
     
-    with psycopg.connect(host="192.168.1.176", port="5432", dbname="price_tracker", user="postgres", password="postgres") as conn:
+    print(insertData)
+    with psycopg.connect(host="192.168.1.195", port="5432", dbname="price_tracker", user="postgres", password="postgres") as conn:
     # with psycopg.connect(host="price-tracker-db.cwukgvtlbuie.us-east-2.rds.amazonaws.com", port="5432", dbname="price-tracker", user="postgres", password="postgres") as conn:
         with conn.cursor() as cur:
 
@@ -119,8 +126,22 @@ def addProduct():
     
     return json.dumps({'success':True}), 200, {'ContentType':'application/json'} 
 
+# New post request to add a new product to the database
+@app.route("/api/adduser", methods = ["POST"])
+@cross_origin()
+def add_user():
+
+    data = request.json
+    
+    my_db = Postgres(filename="postgres/db_info.ini", section="postgres")    
+    my_db.insert_user(user_id=data["user"])
+    
+    return json.dumps({'success':True}), 200, {'ContentType':'application/json'} 
+
+
 if __name__ == "__main__":
     app.run(debug=True, port=8080)
+    
     
     
     
